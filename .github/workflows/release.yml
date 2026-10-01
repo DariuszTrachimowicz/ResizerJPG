@@ -28,6 +28,13 @@ jobs:
           ./tests/Test-Queue.ps1
           ./tests/Test-UIModels.ps1
           ./tests/Test-WindowLayout.ps1
+      - name: Test WPF icon geometry and pixels
+        shell: powershell
+        run: ./tests/Test-Icons.ps1
+      - name: Test local help and GPL license
+        shell: powershell
+        run: |
+          ./tests/Test-HelpLicense.ps1
       - name: Build portable package
         shell: powershell
         run: ./Build-Portable.ps1

@@ -37,4 +37,20 @@
 - [x] Selection independent of inclusion, preview/filmstrip navigation and real JPEG export tested.
 - [x] Keyboard-focus controls, full paths, validation focus, cancellation and modal focus covered.
 
+## 2.2.0 Close-Icon Follow-Up
+- User screenshot exposed a gap in the original desktop-state QA: modal close icons had not been checked pixel-by-pixel.
+- Reproduced actual modal appearance: `work/icon-before-updates.png`. The second independent SVG path was shifted beyond the 24-unit icon canvas.
+- Source conversion now resets the origin before subsequent relative initial moveto commands, preserving their relative line semantics. Only X, download and image data changed.
+- Revised native modal captures: `work/icon-after-updates.png`, `work/icon-after-log.png`. Both display the complete intersecting X. Modal size/density unchanged; crops are actual WPF panels at 96 DPI.
+- `Test-Icons.ps1` confirms five pixel references, stroked bounds and X endpoints/intersection. Its `-CheckDialogs` mode checks both actual close bindings, click/Escape, modal dismissal and focus restoration. Baseline failed, revised build passed.
+- Independent Gemini review: PRZYJETE, round 1, no findings. This does not substitute for actual screen-reader or physical-input testing.
+
+## 2.2.0 Help And GPL Follow-Up
+- Question-circle help command added to the header; GPLv3/no-warranty document link and copyright stay in the existing 28px footer. Help instructions remain in the external offline README, not in the working layout.
+- Native compact/desktop renders: `work/icon-fix/work/help-review-layout/help-1000x680.png` and `work/icon-fix/work/help-review-layout/help-1440x1024.png`. Inspected both with the longer update caption; help, title, credits, GPL and version do not overlap or clip.
+- `Test-HelpLicense.ps1` passed exact local-document routing, keyboard focus, accessible names, missing-file recovery, opener errors, trusted editor arguments, GPL hash and layout bounds. GPL text uses upstream bytes; `.gitattributes` prevents checkout conversion. Third-party license notices and brand PNG/ICO unchanged.
+- Combined Gemini review: PRZYJETE, round 1, no findings. Core, queue (16 cases), models, icon/dialog, package/installer and original v2.0 updater tests passed in the isolated reviewed checkout. Full portable WPF test passed real JPEG export, cancellation, preview, routed drops and update comparison.
+- A provisional local 2.1.1 package was used for X regression only; it was never published. All fixes are released together as 2.2.0.
+- Final main portable package repeated Help/GPL, icons/dialogs, layout, installer/rollback, legacy 2.0 updater and full WPF export tests successfully. Real Help click started trusted Notepad with the exact local README argument; existing user editor processes were not closed. Editor launch receipt does not certify the visual contents of every Notepad tab.
+
 final result: passed

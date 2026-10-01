@@ -1,3 +1,6 @@
+<!-- Copyright (c) 2026 Dariusz Trachimowicz / Digital Xperts
+     SPDX-License-Identifier: GPL-3.0-only
+     See LICENSE for terms. Distributed WITHOUT ANY WARRANTY. -->
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Resizer JPG | Digital Xperts" Width="1440" Height="1024" MinWidth="1000" MinHeight="680"
@@ -186,14 +189,15 @@
       <Grid.RowDefinitions><RowDefinition Height="76"/><RowDefinition Height="*"/><RowDefinition Height="100"/><RowDefinition Height="28"/></Grid.RowDefinitions>
       <Grid.ColumnDefinitions><ColumnDefinition x:Name="QueueColumn" Width="360" MinWidth="280"/><ColumnDefinition Width="*" MinWidth="320"/><ColumnDefinition x:Name="InspectorColumn" Width="304" MinWidth="280"/></Grid.ColumnDefinitions>
       <Border Grid.Row="0" Grid.ColumnSpan="3" Background="White" BorderBrush="{StaticResource Line}" BorderThickness="0,0,0,1">
-        <Grid Margin="20,0"><Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="1"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+        <Grid Margin="20,0"><Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="1"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
           <Button x:Name="BrandLink" Width="214" HorizontalAlignment="Left" Background="Transparent" BorderBrush="Transparent" Padding="4,0" ToolTip="Digital Xperts &#x2022; d-x.pl" AutomationProperties.Name="Digital Xperts, otw&#x00F3;rz d-x.pl">
             <StackPanel Orientation="Horizontal"><Image x:Name="BrandLogo" Width="70" Height="52" Stretch="Uniform" Margin="0,0,8,0"/><StackPanel VerticalAlignment="Center"><TextBlock Text="Digital Xperts" FontSize="16" FontWeight="SemiBold"/><TextBlock Text="d-x.pl" Style="{StaticResource Metadata}" Margin="0,3,0,0"/></StackPanel></StackPanel>
           </Button>
           <Border Grid.Column="1" Background="{StaticResource Line}" Height="34"/>
-          <TextBlock Grid.Column="2" Text="Resizer JPG" FontSize="26" Margin="22,0,12,0" VerticalAlignment="Center"/>
+          <TextBlock x:Name="HeaderTitle" Grid.Column="2" Text="Resizer JPG" FontSize="26" Margin="22,0,12,0" VerticalAlignment="Center"/>
           <Button x:Name="SettingsButton" Grid.Column="3" Background="Transparent" BorderBrush="Transparent" Padding="10,7" ToolTip="Zaawansowane ustawienia eksportu" Margin="0,0,8,0"><StackPanel Orientation="Horizontal"><ContentControl x:Name="SettingsIcon" Width="18" Height="18" Margin="0,0,8,0"/><TextBlock Text="Ustawienia"/></StackPanel></Button>
           <Button x:Name="UpdatesButton" Grid.Column="4" Background="Transparent" BorderBrush="Transparent" Padding="10,7" ToolTip="Aktualizacje programu"><StackPanel Orientation="Horizontal"><ContentControl x:Name="UpdatesIcon" Width="18" Height="18" Margin="0,0,8,0"/><TextBlock x:Name="UpdatesCaption" Text="Aktualizacje"/></StackPanel></Button>
+          <Button x:Name="HelpButton" Grid.Column="5" Style="{StaticResource QuietIconButton}" VerticalAlignment="Center" Margin="8,0,0,0" ToolTip="Pomoc &#x2022; otw&#x00F3;rz README w Notatniku" AutomationProperties.Name="Pomoc, otw&#x00F3;rz lokalny README"><ContentControl x:Name="HelpIcon" Width="18" Height="18"/></Button>
         </Grid>
       </Border>
       <Border Grid.Row="1" Background="White" BorderBrush="{StaticResource Line}" BorderThickness="0,0,1,0">
@@ -324,10 +328,11 @@
           </StackPanel>
         </Grid>
       </Border>
-      <Grid Grid.Row="3" Grid.ColumnSpan="3" Margin="20,0"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
-        <TextBlock Text="Tw&#x00F3;rca: Dariusz Trachimowicz &#x2022; Digital Xperts" Style="{StaticResource Metadata}" VerticalAlignment="Center"/>
-        <TextBlock x:Name="VersionFooter" Grid.Column="1" Text="Wersja 2.0.0" Style="{StaticResource Metadata}" VerticalAlignment="Center"/>
-        <ProgressBar x:Name="Progress" Grid.ColumnSpan="2" VerticalAlignment="Top" Height="3" Minimum="0" Maximum="1000" Foreground="{StaticResource Accent}" Background="Transparent" BorderThickness="0" Margin="-20,0,-20,0" IsHitTestVisible="False"/>
+      <Grid Grid.Row="3" Grid.ColumnSpan="3" Margin="20,0"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+        <TextBlock x:Name="CopyrightFooter" Text="&#x00A9; 2026 Dariusz Trachimowicz &#x2022; Digital Xperts" Style="{StaticResource Metadata}" VerticalAlignment="Center"/>
+        <Button x:Name="LicenseLink" Grid.Column="1" Content="GPLv3 &#x2022; bez gwarancji" MinHeight="0" Height="24" Padding="6,0" Margin="12,0" VerticalAlignment="Center" FontSize="12" Background="Transparent" BorderBrush="Transparent" Foreground="{StaticResource Accent}" ToolTip="Licencja GPL wersja 3 &#x2022; otw&#x00F3;rz LICENSE w Notatniku" AutomationProperties.Name="Licencja GPLv3, bez gwarancji, otw&#x00F3;rz lokalny LICENSE"/>
+        <TextBlock x:Name="VersionFooter" Grid.Column="2" Text="Wersja 2.2.0" Style="{StaticResource Metadata}" VerticalAlignment="Center"/>
+        <ProgressBar x:Name="Progress" Grid.ColumnSpan="3" VerticalAlignment="Top" Height="3" Minimum="0" Maximum="1000" Foreground="{StaticResource Accent}" Background="Transparent" BorderThickness="0" Margin="-20,0,-20,0" IsHitTestVisible="False"/>
       </Grid>
     </Grid>
     <Border x:Name="LogOverlay" Background="#990F1720" Visibility="Collapsed">

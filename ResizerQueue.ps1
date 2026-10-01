@@ -1,3 +1,6 @@
+# Copyright (c) 2026 Dariusz Trachimowicz / Digital Xperts
+# SPDX-License-Identifier: GPL-3.0-only
+# See LICENSE for terms. Distributed WITHOUT ANY WARRANTY.
 # Load after the core functions in ResizerJPG.ps1; this module has no WPF dependencies.
 function Get-ResizerQueueFolderPath {
     param([string]$Path)

@@ -1,3 +1,6 @@
+# Copyright (c) 2026 Dariusz Trachimowicz / Digital Xperts
+# SPDX-License-Identifier: GPL-3.0-only
+# See LICENSE for terms. Distributed WITHOUT ANY WARRANTY.
 . (Join-Path $PSScriptRoot 'ResizerUpdates.ps1')
 # Portable builds prepend these modules to retain the 2.0 package allowlist.
 foreach ($module in @('ResizerUIModels.ps1','ResizerQueue.ps1')) {
@@ -12,9 +15,15 @@ function Invoke-ResizerUiEvents {
 }
 
 function Show-ResizerWindow {
-    param([string[]]$InitialFolders = @(), [scriptblock]$OnShown)
+    param([string[]]$InitialFolders = @(), [scriptblock]$OnShown, [scriptblock]$DocumentOpener)
     Add-Type -AssemblyName PresentationFramework,PresentationCore,WindowsBase,System.Windows.Forms
     $root=$PSScriptRoot
+    if ($null -eq $DocumentOpener) {
+        $DocumentOpener={
+            param([string]$Path)
+            Start-Process -FilePath (Join-Path $env:SystemRoot 'System32\notepad.exe') -ArgumentList ('"{0}"' -f $Path) -ErrorAction Stop
+        }
+    }
     $appInfo=Get-ResizerAppInfo
     [xml]$xaml=Get-Content -LiteralPath (Join-Path $root 'ResizerWindow.xaml') -Raw
     $reader=New-Object Xml.XmlNodeReader($xaml)
@@ -70,7 +79,7 @@ function Show-ResizerWindow {
     $iconMap=@{
         FolderPlusIcon='folder-plus'; ImagesIcon='images'; TrashIcon='trash-2'; PrevIcon='chevron-left'; NextIcon='chevron-right'
         EmptyImageIcon='image'; OutputFolderIcon='folder-open'; ResetIcon='refresh-cw'; PlayIcon='play'; StopIcon='square'
-        UpdatesIcon='refresh-cw'; CloseUpdatesIcon='x'; CloseLogIcon='x'; SettingsIcon='settings-2'
+        UpdatesIcon='refresh-cw'; CloseUpdatesIcon='x'; CloseLogIcon='x'; SettingsIcon='settings-2'; HelpIcon='circle-question-mark'
         ZoomInIcon='zoom-in'; ZoomOutIcon='zoom-out'; FitIcon='scan'; PadIcon='scan'; CropIcon='crop'
     }
     foreach ($key in $iconMap.Keys) {
@@ -451,6 +460,18 @@ switch ($kind) {
     })
     $ui.DefaultOutput.Add_Click({ $state.CustomOutput=$false; Update-Output; Start-Scan })
     $ui.BrandLink.Add_Click({ Start-Process $appInfo.website })
+    function Open-Document([ValidateSet('README.md','LICENSE')][string]$Name) {
+        try {
+            $documentPath=Join-Path $root $Name
+            if (-not (Test-Path -LiteralPath $documentPath -PathType Leaf)) { throw "Brak pliku: $documentPath" }
+            & $DocumentOpener $documentPath
+        } catch {
+            $ui.Status.Text=(T 'Nie mo\u017cna otworzy\u0107 dokumentu: ')+$_.Exception.Message
+            Announce-Status
+        }
+    }
+    $ui.HelpButton.Add_Click({ Open-Document 'README.md' })
+    $ui.LicenseLink.Add_Click({ Open-Document 'LICENSE' })
     $sourceMenu=New-Object Windows.Controls.ContextMenu
     $ui.SourcePath=New-Object Windows.Controls.TextBox
     $ui.SourcePath.IsReadOnly=$true; $ui.SourcePath.MinWidth=320; $ui.SourcePath.MaxWidth=640

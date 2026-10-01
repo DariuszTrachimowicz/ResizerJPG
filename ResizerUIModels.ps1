@@ -1,3 +1,6 @@
+# Copyright (c) 2026 Dariusz Trachimowicz / Digital Xperts
+# SPDX-License-Identifier: GPL-3.0-only
+# See LICENSE for terms. Distributed WITHOUT ANY WARRANTY.
 Add-Type -AssemblyName PresentationCore,WindowsBase
 if (-not ('ResizerPhoto' -as [type])) {
     Add-Type -ReferencedAssemblies @('System.dll', [Windows.Media.ImageSource].Assembly.Location, [Windows.DependencyObject].Assembly.Location) -TypeDefinition @'

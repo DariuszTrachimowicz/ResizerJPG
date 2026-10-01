@@ -1,3 +1,6 @@
+# Copyright (c) 2026 Dariusz Trachimowicz / Digital Xperts
+# SPDX-License-Identifier: GPL-3.0-only
+# See LICENSE for terms. Distributed WITHOUT ANY WARRANTY.
 function Get-ResizerAppInfo {
     param([string]$Directory = $PSScriptRoot)
     return Get-Content -LiteralPath (Join-Path $Directory 'AppInfo.json') -Raw | ConvertFrom-Json

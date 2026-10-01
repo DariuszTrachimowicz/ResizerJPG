@@ -1,3 +1,6 @@
+# Copyright (c) 2026 Dariusz Trachimowicz / Digital Xperts
+# SPDX-License-Identifier: GPL-3.0-only
+# See LICENSE for terms. Distributed WITHOUT ANY WARRANTY.
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 $root = Split-Path -Parent $PSScriptRoot

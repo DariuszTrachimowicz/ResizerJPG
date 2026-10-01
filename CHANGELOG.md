@@ -1,5 +1,11 @@
 # Zmiany
 
+## 2.2.0 - 2026-10-01
+
+- Pomoc pod ikona znaku zapytania w naglowku: lokalny README otwierany w Notatniku bez blokowania interfejsu. Instrukcje importu, przeciagania, eksportu, podgladu i rozwiazywania problemow.
+- Link GPLv3 z informacja o braku gwarancji w stopce; pelny LICENSE otwierany lokalnie. Od tej wersji program na licencji GPL-3.0-only, z oznaczeniami praw autorskich i dostepem do kodu zrodlowego.
+- Poprawiona konwersja niezaleznych sciezek SVG Lucide: kompletne X zamykania paneli oraz poprawne ikony pobierania i obrazu. Zachowane zamykanie kliknieciem/Esc i przywracanie fokusu.
+
 ## 2.1.0 - 2026-10-01
 
 - Uklad z wybranej makiety: kolejka zdjec po lewej, centralny podglad i filmstrip, ustawienia Makalu Sklep po prawej oraz staly dolny pasek i stopka.

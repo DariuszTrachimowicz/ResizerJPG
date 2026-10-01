@@ -1,6 +1,8 @@
 # Resizer JPG | Digital Xperts
 
-Wersja **2.1.0**. Tworca: **Dariusz Trachimowicz**. [Digital Xperts](https://d-x.pl/).
+Pomoc: kliknij ikone **znaku zapytania w kolku** w naglowku programu. Otwiera ten plik README w Notatniku, lokalnie i bez internetu. Link **GPLv3 - bez gwarancji** w stopce otwiera pelny tekst LICENSE. Mozesz tez otworzyc oba pliki bezposrednio z folderu programu.
+
+Wersja **2.2.0**. Tworca: **Dariusz Trachimowicz**. [Digital Xperts](https://d-x.pl/).
 
 Przenosny program Windows do przygotowywania zdjec JPG/JPEG. Natywny interfejs WPF, bez dodatkowych bibliotek. Przetwarzanie jest lokalne; internet jest potrzebny tylko do aktualizacji.
 
@@ -33,6 +35,14 @@ Po lewej jest kolejka konkretnych zdjec, grupowana wedlug folderow zrodlowych. G
 4. W prawym panelu ustaw profil, orientacje, dopasowanie i jakosc JPG. DPI, presety oraz szerokosc/wysokosc sa w sekcji `Zaawansowane`.
 5. Kliknij `Eksportuj N zdjec`, aby zapisac tylko zaznaczone pozycje. Eksport pracuje w tle. `Zatrzymaj` zglasza kooperacyjne zatrzymanie skanowania lub eksportu; nie przerywa zapisu biezacego zdjecia. Zamkniecie okna podczas tej pracy rowniez czeka na jej bezpieczne zakonczenie. Dziennik zawiera szczegoly i bledy.
 6. `Otworz wynik` otwiera folder wynikowy, a przy kilku folderach pozwala wybrac jeden z menu.
+
+### Przeciaganie folderow i plikow
+
+**Cale glowne okno przyjmuje upuszczane foldery i pliki JPG/JPEG. Nie ma osobnego pola do wrzucania plikow.** Najpierw zamknij nakladki `Aktualizacje` lub `Dziennik` przyciskiem X albo klawiszem `Esc`. Podczas przeciagania poprawnych plikow lub folderow obszar podgladu podswietla sie na niebiesko. Eksport i pobieranie aktualizacji blokuja przyjmowanie nowych zrodel; poczekaj na koniec tej pracy.
+
+Po skanowaniu foldery tworza zwijane grupy w lewej kolejce, a w nich widac poszczegolne zdjecia z checkboxami wyboru do eksportu. Samo wskazanie miniatury zmienia podglad, nie checkbox.
+
+Jakosc JPG 85 jest ustawieniem domyslnym. Nizsza jakosc zwykle zmniejsza rozmiar pliku kosztem szczegolow, wyzsza zwykle zwieksza rozmiar. Porownaj `Oryginal` i `Wynik` przed eksportem.
 
 ### Podglad i zoom
 
@@ -67,10 +77,28 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\ResizerJPG.ps1 -InputFolde
 
 Alias `-OnlineStore` nadal dziala. Wlasne ustawienia: `-AspectRatio "9:16" -Width 1080 -Height 1920 -Mode Pad -Quality 85 -Dpi 72`.
 
+## Rozwiazywanie problemow
+
+- Brak reakcji na upuszczenie: zamknij nakladki, poczekaj na zakonczenie eksportu lub pobierania i sprawdz, czy przeciagasz folder albo JPG/JPEG. Uzyj tez `Dodaj folder` lub `Dodaj pliki`.
+- Windows moze blokowac przeciaganie miedzy Eksploratorem a programem uruchomionym z innymi uprawnieniami. Uruchom oba normalnie, na tym samym poziomie uprawnien; nie uruchamiaj Resizera jako administrator tylko po to, aby dodac zdjecia.
+- Brak zdjec po skanowaniu: sprawdz rozszerzenia i opcje `Podfoldery`. Foldery wynikowe sa pomijane zgodnie z opisem powyzej.
+- Blad zapisu: sprawdz dostep do folderu docelowego, wolne miejsce i szczegoly w `Dziennik`. Oryginaly nie sa nadpisywane.
+- Pomoc lub licencja nie otwiera sie: sprawdz komunikat statusu i obecnosc README.md oraz LICENSE w folderze programu. Rozpakuj kompletna paczke; gdy Notatnik jest niedostepny, odczytaj te pliki innym edytorem tekstu.
+
+## Licencja GPLv3
+
+Copyright (c) 2026 Dariusz Trachimowicz / Digital Xperts.
+
+Od wersji **2.2.0** program jest wolnym oprogramowaniem na licencji **GNU General Public License, wylacznie wersja 3** (**SPDX: GPL-3.0-only**). Nie oznacza to zmiany licencji starszych wydan wstecz. Mozesz uzywac, kopiowac, modyfikowac i rozpowszechniac program zgodnie z warunkami GPLv3, w tym obowiazkami dotyczacymi udostepnienia odpowiedniego kodu zrodlowego przy rozpowszechnianiu.
+
+Program jest udostepniany **BEZ JAKIEJKOLWIEK GWARANCJI**, w tym dorozumianej gwarancji przydatnosci handlowej lub do okreslonego celu. Pelne warunki zawiera dolaczony [LICENSE](LICENSE), dostepny takze przez link w stopce programu.
+
+[Pelny kod zrodlowy programu i historia wersji](https://github.com/DariuszTrachimowicz/ResizerJPG). Skladniki zewnetrzne zachowuja swoje licencje i oznaczenia w [THIRD-PARTY-NOTICES.txt](THIRD-PARTY-NOTICES.txt).
+
 ## Wydawanie
 
 `AppInfo.json` jest zrodlem wersji i adresu repozytorium. `Build-Portable.ps1` buduje folder przenosny, ZIP, manifest i plik SHA-256. Tag `vX.Y.Z` zgodny z metadanymi uruchamia testy i workflow wydania.
 
-Testy w `tests`: `Test-Resizer.ps1`, `Test-Queue.ps1`, `Test-UIModels.ps1`, `Test-WindowLayout.ps1`, `Test-Launcher.ps1`, `Test-Updates.ps1` i `Test-PortableCompatibility.ps1`. Lokalny test GUI: `powershell -Sta -NoProfile -File .\tests\Test-WpfUI.ps1`. CI sprawdza silnik, kolejke, modele, strukture ukladu, paczke i instalator; nie zastepuje recznego testu interfejsu.
+Testy w `tests`: `Test-Resizer.ps1`, `Test-Queue.ps1`, `Test-UIModels.ps1`, `Test-WindowLayout.ps1`, `Test-Launcher.ps1`, `Test-Updates.ps1`, `Test-PortableCompatibility.ps1`, `Test-Icons.ps1` i `Test-HelpLicense.ps1`. Lokalny test GUI: `powershell -Sta -NoProfile -File .\tests\Test-WpfUI.ps1`. CI sprawdza silnik, kolejke, modele, strukture ukladu, ikony, pomoc/licencje, paczke i instalator; nie zastepuje recznego testu interfejsu ani fizycznego przeciagania z Eksploratora.
 
 Logo pochodzi z projektu Digital Xperts, zgodnie z poleceniem wlasciciela. Ikona programu jest wielorozmiarowa wersja logo. Ikony kontrolek: Lucide (ISC/MIT); licencje w `THIRD-PARTY-NOTICES.txt`.

@@ -2,7 +2,7 @@
 
 Pomoc: kliknij ikone **znaku zapytania w kolku** w naglowku programu. Otwiera ten plik README w Notatniku, lokalnie i bez internetu. Link **GPLv3 - bez gwarancji** w stopce otwiera pelny tekst LICENSE. Mozesz tez otworzyc oba pliki bezposrednio z folderu programu.
 
-Wersja **2.2.1**. Tworca: **Dariusz Trachimowicz**. [Digital Xperts](https://d-x.pl/).
+Wersja **2.2.2**. Tworca: **Dariusz Trachimowicz**. [Digital Xperts](https://d-x.pl/).
 
 Przenosny program Windows do przygotowywania zdjec JPG/JPEG. Natywny interfejs WPF, bez dodatkowych bibliotek. Przetwarzanie jest lokalne; internet jest potrzebny tylko do aktualizacji.
 
@@ -12,7 +12,7 @@ Przenosny program Windows do przygotowywania zdjec JPG/JPEG. Natywny interfejs W
 
 Rozpakuj **cala paczke ZIP** do jednego folderu. Kliknij `Uruchom Resizer JPG.vbs` lub utworz skrot przez `Utworz skrot z ikona.vbs`. Po przeniesieniu programu utworz skrot ponownie. Uruchamiacz pracuje z ukryta konsola.
 
-Po aktualizacji uruchom program ponownie i odtworz skrot przez `Utworz skrot z ikona.vbs`, aby wskazywal aktualna ikone. Skrypt `UtworzSkrotZIkona.ps1`, uzywany przy budowaniu paczki i instalacji aktualizacji, powiadamia Windows o zmianie konkretnego skrotu. Windows moze nadal przechowywac stara ikone przypietego elementu paska zadan; wyglad przypiec zalezy od lokalnej pamieci podrecznej powloki.
+Po aktualizacji odtworz skrot przez `Utworz skrot z ikona.vbs`, aby wskazywal aktualna ikone. VBS uruchamia bez widocznej konsoli wspolny kreator `UtworzSkrotZIkona.ps1`, czeka na jego wynik i pokazuje potwierdzenie albo blad. Ten sam kreator jest uzywany przy budowaniu paczki i instalacji aktualizacji. Kopiuje zatwierdzona ikone do `%LOCALAPPDATA%\DigitalXperts\ResizerJPG\icons\resizer-jpg-<SHA256>.ico`, sprawdza zgodnosc kopii i ustawia te sciezke w skrocie. Zmieniona zawartosc ikony otrzymuje nowa nazwe, wiec Windows nie korzysta ze starego klucza pamieci ikon. Ponowne wykonanie wykorzystuje te sama zweryfikowana kopie. Powiadomienie Windows dotyczy tylko kopii ikony i zapisanego skrotu; starsze kopie oraz przypiecia pozostaja zachowane. Istniejace przypiecia moga nadal wskazywac stara sciezke.
 
 Wymagania: Windows 10/11, Windows PowerShell 5.1, WPF i Windows Script Host. Polityka organizacji blokujaca VBS lub PowerShell moze zablokowac uruchamiacz.
 

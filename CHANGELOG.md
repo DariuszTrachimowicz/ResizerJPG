@@ -1,5 +1,12 @@
 # Zmiany
 
+## 2.2.2 - 2026-10-01
+
+- Klikany kreator VBS korzysta teraz ze wspolnego kreatora PowerShell: ukryta konsola, oczekiwanie na wynik oraz polskie potwierdzenie lub blad.
+- Skrot wskazuje zweryfikowana kopie ICO w pamieci uzytkownika, z SHA256 w nazwie. Nowa zawartosc dostaje nowy klucz pamieci ikon Windows; niezmieniona kopia jest uzywana ponownie.
+- Celowane powiadomienie obejmuje kopie ikony i zapisany LNK. Bez usuwania starych ikon, zmian przypiec ani restartowania Eksploratora. Zatwierdzone grafiki pozostaja bez zmian.
+- Regresja uruchamia rzeczywisty VBS w izolowanym folderze i sprawdza cache, ponowne wykonanie, parametry skrotu oraz propagacje bledow. Format paczki nadal obejmuje 15 plikow zarzadzanych i manifest.
+
 ## 2.2.1 - 2026-10-01
 
 - Osobna ikona programu i skrotu: zdjecie z ukosna dwukierunkowa strzalka na cyjanowym kole, z przezroczystym tlem i siedmioma rozmiarami ICO 16-256 px. Oryginalne logo Digital Xperts w naglowku pozostaje bez zmian.

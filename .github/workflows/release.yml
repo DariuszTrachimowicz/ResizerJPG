@@ -11,6 +11,8 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Verify version tag
         if: startsWith(github.ref, 'refs/tags/')
         shell: powershell
@@ -20,12 +22,20 @@ jobs:
       - name: Test resize engine
         shell: powershell
         run: ./tests/Test-Resizer.ps1
+      - name: Test photo queue and desktop models
+        shell: powershell
+        run: |
+          ./tests/Test-Queue.ps1
+          ./tests/Test-UIModels.ps1
+          ./tests/Test-WindowLayout.ps1
       - name: Build portable package
         shell: powershell
         run: ./Build-Portable.ps1
       - name: Test update package and installer
         shell: powershell
-        run: ./tests/Test-Updates.ps1
+        run: |
+          ./tests/Test-Updates.ps1
+          ./tests/Test-PortableCompatibility.ps1
       - name: Upload portable package
         uses: actions/upload-artifact@v4
         with:

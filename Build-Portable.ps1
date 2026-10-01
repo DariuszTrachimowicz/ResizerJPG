@@ -5,7 +5,8 @@ $metadata = Get-ResizerAppInfo
 $files = @(Get-ResizerManagedFiles)
 $portable = Join-Path $root 'ResizerJPG_portable'
 $archivePath = Join-Path $root 'ResizerJPG_portable.zip'
-foreach ($file in $files) {
+$modules = @('ResizerUIModels.ps1','ResizerQueue.ps1')
+foreach ($file in ($files + $modules)) {
     $source = Join-Path $root $file
     if (-not (Test-Path -LiteralPath $source -PathType Leaf)) { throw "Brak pliku: $source" }
     if ([IO.Path]::GetExtension($file) -eq '.ps1') {
@@ -18,8 +19,14 @@ foreach ($file in $files) {
 [void](New-Item -ItemType Directory -Path $portable -Force)
 $hashes = [ordered]@{}
 foreach ($file in $files) {
-    Copy-Item -LiteralPath (Join-Path $root $file) -Destination (Join-Path $portable $file) -Force
-    if ((Get-FileHash -LiteralPath (Join-Path $root $file)).Hash -ne (Get-FileHash -LiteralPath (Join-Path $portable $file)).Hash) { throw "Niepoprawna kopia: $file" }
+    if ($file -eq 'ResizerUI.ps1') {
+        # Keep the 16-entry archive accepted by the already deployed 2.0.0 updater.
+        $parts = @($modules + @('ResizerUI.ps1') | ForEach-Object { Get-Content -LiteralPath (Join-Path $root $_) -Raw })
+        [IO.File]::WriteAllText((Join-Path $portable $file),($parts -join [Environment]::NewLine))
+    } else {
+        Copy-Item -LiteralPath (Join-Path $root $file) -Destination (Join-Path $portable $file) -Force
+        if ((Get-FileHash -LiteralPath (Join-Path $root $file)).Hash -ne (Get-FileHash -LiteralPath (Join-Path $portable $file)).Hash) { throw "Niepoprawna kopia: $file" }
+    }
     $hashes[$file] = (Get-FileHash -LiteralPath (Join-Path $portable $file) -Algorithm SHA256).Hash
 }
 $manifest = [ordered]@{version=$metadata.version;files=$hashes}
@@ -39,7 +46,7 @@ try {
         $stream = $entry.Open()
         $sha = [Security.Cryptography.SHA256]::Create()
         try { $hash = [BitConverter]::ToString($sha.ComputeHash($stream)).Replace('-','') } finally { $stream.Dispose(); $sha.Dispose() }
-        if ($hash -ne (Get-FileHash -LiteralPath (Join-Path $root $file)).Hash) { throw "Niepoprawna zawartosc ZIP: $file" }
+        if ($hash -ne (Get-FileHash -LiteralPath (Join-Path $portable $file)).Hash) { throw "Niepoprawna zawartosc ZIP: $file" }
     }
 } finally { $archive.Dispose() }
 $archiveHash = (Get-FileHash -LiteralPath $archivePath -Algorithm SHA256).Hash.ToLowerInvariant()

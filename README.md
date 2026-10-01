@@ -1,6 +1,6 @@
 # Resizer JPG | Digital Xperts
 
-Wersja **2.0.0**. Tworca: **Dariusz Trachimowicz**. [Digital Xperts](https://d-x.pl/).
+Wersja **2.1.0**. Tworca: **Dariusz Trachimowicz**. [Digital Xperts](https://d-x.pl/).
 
 Przenosny program Windows do przygotowywania zdjec JPG/JPEG. Natywny interfejs WPF, bez dodatkowych bibliotek. Przetwarzanie jest lokalne; internet jest potrzebny tylko do aktualizacji.
 
@@ -25,17 +25,28 @@ Zmiana parametrow przelacza profil na wlasny. Wybor `Makalu Sklep` przywraca dom
 
 ## Praca ze zdjeciami
 
-1. Dodaj folder lub pliki JPG w panelu zrodel. Mozesz tez przeciagnac kilka plikow/folderow na okno lub skrot.
-2. Wybierz zrodlo. Strzalki pod podgladem przegladaja zdjecia folderu; `Oryginal / Wynik` pokazuje obraz przed i po dopasowaniu.
-3. W panelu eksportu ustaw profil, orientacje, dopasowanie, jakosc i DPI. Presety oraz szerokosc/wysokosc sa pod `Rozmiar niestandardowy`.
-4. Kliknij `Eksportuj JPG`. Zatrzymanie konczy prace po biezacym zdjeciu. Dziennik zawiera szczegoly i bledy.
-5. `Otworz wynik` otwiera foldery wynikowe.
+Po lewej jest kolejka konkretnych zdjec, grupowana wedlug folderow zrodlowych. Grupy mozna zwijac; kazde zdjecie ma miniature, nazwe, informacje o wymiarach i checkbox eksportu. W centrum jest podglad z paskiem miniatur (filmstrip), a po prawej ustawienia eksportu z domyslnym profilem Makalu Sklep. Staly dolny pasek zawiera cel zapisu, przykladowa nazwe pliku, licznik zaznaczonych zdjec, eksport, status, dziennik i otwieranie wyniku. Stopka z autorem i wersja pozostaje widoczna.
 
-Podglad wyniku jest pomniejszony do maksymalnie 1000 px, nie jest podgladem 1:1 finalnego JPG. Suwak odswieza go po puszczeniu myszy; pole rozmiaru po zatwierdzeniu.
+1. Dodaj folder lub pliki JPG/JPEG do kolejki. Mozesz tez przeciagnac kilka plikow/folderow na okno lub skrot. Skanowanie i tworzenie miniatur odbywa sie w tle; opcja `Podfoldery` jest domyslnie wlaczona.
+2. Kliknij zdjecie w kolejce lub filmstripie, aby je podejrzec. Strzalki przechodza po zdjeciach calej kolejki, nie tylko jednego folderu. `Oryginal / Wynik` przelacza widok przed i po przetwarzaniu.
+3. Checkbox przy zdjeciu decyduje tylko o jego eksporcie. Wybor zdjecia do podgladu jest niezalezny: mozna podejrzec zdjecie odznaczone, a jego klikniecie nie zaznacza go do eksportu. Checkbox nad kolejka zaznacza lub odznacza wszystkie zdjecia. Usuniecie zdjecia z kolejki i `Wyczysc` nie usuwaja plikow z dysku.
+4. W prawym panelu ustaw profil, orientacje, dopasowanie i jakosc JPG. DPI, presety oraz szerokosc/wysokosc sa w sekcji `Zaawansowane`.
+5. Kliknij `Eksportuj N zdjec`, aby zapisac tylko zaznaczone pozycje. Eksport pracuje w tle. `Zatrzymaj` zglasza kooperacyjne zatrzymanie skanowania lub eksportu; nie przerywa zapisu biezacego zdjecia. Zamkniecie okna podczas tej pracy rowniez czeka na jej bezpieczne zakonczenie. Dziennik zawiera szczegoly i bledy.
+6. `Otworz wynik` otwiera folder wynikowy, a przy kilku folderach pozwala wybrac jeden z menu.
+
+### Podglad i zoom
+
+`Wynik` pokazuje finalny JPG wygenerowany do pliku tymczasowego przez ten sam silnik co eksport, w dokladnych wymiarach oraz z wybrana orientacja, dopasowaniem, jakoscia JPG i DPI. Obraz nie jest dodatkowo zmniejszany przed wyswietleniem; plik tymczasowy jest usuwany po odczycie. Nie jest to odczyt wczesniej wyeksportowanego pliku, lecz wynik dla biezacych ustawien.
+
+`Oryginal` uwzglednia EXIF i jest pomniejszany do maksymalnie **2048 px na dluzszym boku**, bez powiekszania mniejszych zdjec. Wyswietlane wymiary oryginalu opisuja zdjecie zrodlowe, nie pomniejszony obraz podgladu.
+
+Zoom **100% oznacza dopasowanie do obszaru podgladu**, nie skale pikselowa 1:1. Zakres **100-400%** powieksza widok wzgledem tego dopasowania. Dostepne sa suwak, przyciski powiekszania/pomniejszania, `Ctrl` + kolko myszy i przycisk dopasowania; wybor innego zdjecia przywraca 100%.
+
+Generowanie podgladu odbywa sie w tle. Zmiana jakosci suwakiem zleca odswiezenie juz podczas przesuwania, z opoznieniem 120 ms laczacym szybkie zmiany. Zmiany profilu, orientacji, presetu i dopasowania rowniez odswiezaja podglad; pola liczbowe zatwierdzaja zmiany po opuszczeniu pola. Nieaktualne wyniki podgladu sa pomijane.
 
 Domyslnie zdjecia trafiaja do `resize` obok zrodel. `produkt.jpg` staje sie `produkt_R.jpg`. Przy kolizji powstaje `produkt_R_1.jpg`. Oryginaly pozostaja zachowane.
 
-Wspolny folder wybiera ikona folderu w wierszu `Zapis`; ikona przywracania wraca do domyslnego zapisu. Podfoldery sa opcjonalne, ich struktura jest zachowywana. Foldery `resize` i nakladajace sie zrodla nie sa ponownie przetwarzane.
+Wspolny folder wybiera ikona folderu przy `Cel zapisu`; ikona przywracania wraca do domyslnego zapisu. Struktura podfolderow jest zachowywana wzgledem folderu zrodlowego. Skanowanie pomija podfoldery `resize`, wybrany wspolny folder wynikowy i dowiazania katalogowe; nakladajace sie zrodla nie duplikuja zdjec w kolejce. Jawnie dodany plik z `resize` moze trafic do kolejki.
 
 ## Aktualizacje GitHub
 
@@ -60,6 +71,6 @@ Alias `-OnlineStore` nadal dziala. Wlasne ustawienia: `-AspectRatio "9:16" -Widt
 
 `AppInfo.json` jest zrodlem wersji i adresu repozytorium. `Build-Portable.ps1` buduje folder przenosny, ZIP, manifest i plik SHA-256. Tag `vX.Y.Z` zgodny z metadanymi uruchamia testy i workflow wydania.
 
-Testy: `powershell -Sta -NoProfile -File .\tests\Test-Resizer.ps1 -Ui`, `Test-Launcher.ps1` i `Test-Updates.ps1`. GUI jest sprawdzane lokalnie przez zdarzenia kontrolek i rendery w dwoch rozmiarach. CI sprawdza silnik, paczke i instalator; nie zastepuje recznego testu interfejsu.
+Testy w `tests`: `Test-Resizer.ps1`, `Test-Queue.ps1`, `Test-UIModels.ps1`, `Test-WindowLayout.ps1`, `Test-Launcher.ps1`, `Test-Updates.ps1` i `Test-PortableCompatibility.ps1`. Lokalny test GUI: `powershell -Sta -NoProfile -File .\tests\Test-WpfUI.ps1`. CI sprawdza silnik, kolejke, modele, strukture ukladu, paczke i instalator; nie zastepuje recznego testu interfejsu.
 
 Logo pochodzi z projektu Digital Xperts, zgodnie z poleceniem wlasciciela. Ikona programu jest wielorozmiarowa wersja logo. Ikony kontrolek: Lucide (ISC/MIT); licencje w `THIRD-PARTY-NOTICES.txt`.

@@ -19,7 +19,7 @@ with Image.open(args.logo) as logo:
     canvas.alpha_composite(icon, ((256-icon.width)//2, (256-icon.height)//2))
     canvas.save(args.output / 'resizer-jpg.ico', sizes=[(16,16),(24,24),(32,32),(48,48),(64,64),(128,128),(256,256)])
 
-names = ['folder-plus','images','trash-2','play','square','folder-open','refresh-cw','settings-2','chevron-left','chevron-right','external-link','download','scan','image','list','sliders-horizontal','check','x']
+names = ['folder-plus','images','trash-2','play','square','folder-open','refresh-cw','settings-2','chevron-left','chevron-right','external-link','download','scan','image','list','sliders-horizontal','check','x','zoom-in','zoom-out','crop']
 geometries = {}
 for name in names:
     source_name = {'trash-2': 'trash', 'settings-2': 'sliders-horizontal'}.get(name, name)

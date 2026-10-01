@@ -1,0 +1,9 @@
+ResizerJPG_portable/
+ResizerJPG_portable.zip
+ResizerJPG_portable.zip.sha256
+Resizer JPG.lnk
+package-manifest.json
+work/
+_updates/
+tests/*.png
+*.log

@@ -1,0 +1,193 @@
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Resizer JPG | Digital Xperts" Width="1240" Height="840" MinWidth="1000" MinHeight="680"
+        WindowStartupLocation="CenterScreen" Background="#F3F5F7" FontFamily="Segoe UI" FontSize="13"
+        Foreground="#23272D" UseLayoutRounding="True" SnapsToDevicePixels="True">
+  <Window.Resources>
+    <SolidColorBrush x:Key="Accent" Color="#067CBD"/>
+    <SolidColorBrush x:Key="Line" Color="#DFE4E9"/>
+    <SolidColorBrush x:Key="Muted" Color="#717982"/>
+    <Style TargetType="Button">
+      <Setter Property="Background" Value="White"/><Setter Property="Foreground" Value="#323941"/>
+      <Setter Property="BorderBrush" Value="{StaticResource Line}"/><Setter Property="BorderThickness" Value="1"/>
+      <Setter Property="Padding" Value="12,9"/><Setter Property="Cursor" Value="Hand"/>
+      <Setter Property="MinHeight" Value="36"/><Setter Property="VerticalContentAlignment" Value="Center"/>
+      <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="Button">
+        <Border x:Name="Shell" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="5" Padding="{TemplateBinding Padding}">
+          <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Border>
+        <ControlTemplate.Triggers>
+          <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Shell" Property="Opacity" Value="0.78"/></Trigger>
+          <Trigger Property="IsPressed" Value="True"><Setter TargetName="Shell" Property="Opacity" Value="0.62"/></Trigger>
+          <Trigger Property="IsEnabled" Value="False"><Setter TargetName="Shell" Property="Opacity" Value="0.35"/></Trigger>
+          <Trigger Property="IsKeyboardFocused" Value="True"><Setter TargetName="Shell" Property="BorderBrush" Value="{StaticResource Accent}"/><Setter TargetName="Shell" Property="BorderThickness" Value="2"/></Trigger>
+        </ControlTemplate.Triggers>
+      </ControlTemplate></Setter.Value></Setter>
+    </Style>
+    <Style x:Key="IconButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+      <Setter Property="Width" Value="36"/><Setter Property="Height" Value="36"/><Setter Property="Padding" Value="8"/>
+    </Style>
+    <Style x:Key="Primary" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+      <Setter Property="Background" Value="{StaticResource Accent}"/><Setter Property="Foreground" Value="White"/>
+      <Setter Property="BorderBrush" Value="{StaticResource Accent}"/><Setter Property="FontWeight" Value="SemiBold"/>
+    </Style>
+    <Style x:Key="Segment" TargetType="RadioButton">
+      <Setter Property="Foreground" Value="#6B737C"/><Setter Property="Cursor" Value="Hand"/><Setter Property="Padding" Value="16,7"/>
+      <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="RadioButton">
+        <Border x:Name="Shell" Background="Transparent" Padding="{TemplateBinding Padding}" CornerRadius="4"><ContentPresenter/></Border>
+        <ControlTemplate.Triggers><Trigger Property="IsChecked" Value="True"><Setter TargetName="Shell" Property="Background" Value="White"/><Setter Property="Foreground" Value="#23272D"/><Setter Property="FontWeight" Value="SemiBold"/></Trigger></ControlTemplate.Triggers>
+      </ControlTemplate></Setter.Value></Setter>
+    </Style>
+    <Style TargetType="TextBox">
+      <Setter Property="Background" Value="White"/><Setter Property="BorderBrush" Value="{StaticResource Line}"/>
+      <Setter Property="BorderThickness" Value="1"/><Setter Property="Padding" Value="10,5"/>
+      <Setter Property="VerticalContentAlignment" Value="Center"/><Setter Property="MinHeight" Value="36"/>
+      <Setter Property="Height" Value="36"/>
+      <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="TextBox">
+        <Border x:Name="Shell" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="4" Padding="{TemplateBinding Padding}">
+          <ScrollViewer x:Name="PART_ContentHost"/>
+        </Border>
+        <ControlTemplate.Triggers><Trigger Property="IsKeyboardFocused" Value="True"><Setter TargetName="Shell" Property="BorderBrush" Value="{StaticResource Accent}"/></Trigger><Trigger Property="IsEnabled" Value="False"><Setter TargetName="Shell" Property="Opacity" Value="0.45"/></Trigger></ControlTemplate.Triggers>
+      </ControlTemplate></Setter.Value></Setter>
+    </Style>
+    <Style TargetType="ComboBox">
+      <Setter Property="Background" Value="White"/><Setter Property="BorderBrush" Value="{StaticResource Line}"/>
+      <Setter Property="Padding" Value="10,8"/><Setter Property="MinHeight" Value="36"/>
+      <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="ComboBox">
+        <Grid>
+          <ToggleButton Focusable="False" IsChecked="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
+            <ToggleButton.Template><ControlTemplate TargetType="ToggleButton"><Border Background="White" BorderBrush="#DFE4E9" BorderThickness="1" CornerRadius="4"><TextBlock Text="&#x2304;" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,12,5" Foreground="#717982" FontSize="16"/></Border></ControlTemplate></ToggleButton.Template>
+          </ToggleButton>
+          <ContentPresenter IsHitTestVisible="False" Content="{TemplateBinding SelectionBoxItem}" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" Margin="10,0,30,0" VerticalAlignment="Center"/>
+          <Popup x:Name="PART_Popup" IsOpen="{TemplateBinding IsDropDownOpen}" AllowsTransparency="True" Placement="Bottom" Focusable="False" PopupAnimation="Fade">
+            <Border Background="White" BorderBrush="#C9D3DD" BorderThickness="1" CornerRadius="4" MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}"><ScrollViewer MaxHeight="240"><ItemsPresenter/></ScrollViewer></Border>
+          </Popup>
+        </Grid>
+      </ControlTemplate></Setter.Value></Setter>
+    </Style>
+    <Style TargetType="ComboBoxItem"><Setter Property="Padding" Value="10,9"/></Style>
+    <Style TargetType="Slider">
+      <Setter Property="MinHeight" Value="24"/>
+      <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="Slider">
+        <Track x:Name="PART_Track" Minimum="{TemplateBinding Minimum}" Maximum="{TemplateBinding Maximum}" Value="{TemplateBinding Value}" Height="24">
+          <Track.DecreaseRepeatButton><RepeatButton Command="{x:Static Slider.DecreaseLarge}" Focusable="False"><RepeatButton.Template><ControlTemplate TargetType="RepeatButton"><Border Background="#067CBD" Height="3"/></ControlTemplate></RepeatButton.Template></RepeatButton></Track.DecreaseRepeatButton>
+          <Track.Thumb><Thumb Width="14" Height="14" Cursor="Hand"><Thumb.Template><ControlTemplate TargetType="Thumb"><Border Background="White" BorderBrush="#067CBD" BorderThickness="2" CornerRadius="7"/></ControlTemplate></Thumb.Template></Thumb></Track.Thumb>
+          <Track.IncreaseRepeatButton><RepeatButton Command="{x:Static Slider.IncreaseLarge}" Focusable="False"><RepeatButton.Template><ControlTemplate TargetType="RepeatButton"><Border Background="#DCE4EB" Height="3"/></ControlTemplate></RepeatButton.Template></RepeatButton></Track.IncreaseRepeatButton>
+        </Track>
+      </ControlTemplate></Setter.Value></Setter>
+    </Style>
+    <Style x:Key="FieldLabel" TargetType="TextBlock"><Setter Property="Foreground" Value="{StaticResource Muted}"/><Setter Property="FontSize" Value="12"/><Setter Property="Margin" Value="0,0,0,7"/></Style>
+    <Style TargetType="CheckBox"><Setter Property="VerticalContentAlignment" Value="Center"/><Setter Property="Margin" Value="0,7,0,0"/></Style>
+    <Style TargetType="ListBoxItem">
+      <Setter Property="HorizontalContentAlignment" Value="Stretch"/><Setter Property="Padding" Value="10,11"/><Setter Property="Margin" Value="0,0,0,3"/>
+      <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="ListBoxItem">
+        <Border x:Name="Shell" Padding="{TemplateBinding Padding}" Background="Transparent" CornerRadius="4"><ContentPresenter/></Border>
+        <ControlTemplate.Triggers><Trigger Property="IsSelected" Value="True"><Setter TargetName="Shell" Property="Background" Value="#E6F2F9"/></Trigger><Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Shell" Property="BorderBrush" Value="#C4DDEB"/><Setter TargetName="Shell" Property="BorderThickness" Value="1"/></Trigger></ControlTemplate.Triggers>
+      </ControlTemplate></Setter.Value></Setter>
+    </Style>
+  </Window.Resources>
+  <Grid Background="#F3F5F7">
+    <Grid x:Name="MainLayout">
+      <Grid.RowDefinitions><RowDefinition Height="76"/><RowDefinition Height="*"/><RowDefinition Height="112"/><RowDefinition Height="34"/></Grid.RowDefinitions>
+      <Grid.ColumnDefinitions><ColumnDefinition Width="242"/><ColumnDefinition Width="*"/><ColumnDefinition Width="320"/></Grid.ColumnDefinitions>
+      <Border Grid.Row="0" Grid.ColumnSpan="3" Background="White" BorderBrush="{StaticResource Line}" BorderThickness="0,0,0,1">
+        <Grid Margin="22,0"><Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="1"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+          <Button x:Name="BrandLink" BorderThickness="0" Padding="0" Background="Transparent" ToolTip="Digital Xperts &#x2022; d-x.pl" Width="188" HorizontalAlignment="Left">
+            <StackPanel Orientation="Horizontal"><Image x:Name="BrandLogo" Width="58" Height="44" Stretch="Uniform" Margin="0,0,9,0"/><StackPanel VerticalAlignment="Center"><TextBlock Text="Digital Xperts" FontSize="16" FontWeight="SemiBold"/><TextBlock Text="d-x.pl" Foreground="{StaticResource Muted}" FontSize="11" Margin="0,3,0,0"/></StackPanel></StackPanel>
+          </Button>
+          <Border Grid.Column="1" Background="{StaticResource Line}" Height="34"/>
+          <StackPanel Grid.Column="2" VerticalAlignment="Center" Margin="24,0"><TextBlock Text="Resizer JPG" FontSize="22" FontWeight="SemiBold"/><TextBlock Text="Zdj&#x0119;cia produktowe" Foreground="{StaticResource Muted}" FontSize="11" Margin="0,2,0,0"/></StackPanel>
+          <Button x:Name="UpdatesButton" Grid.Column="3" BorderThickness="0" Background="#F3F5F7" ToolTip="Aktualizacje programu"><StackPanel Orientation="Horizontal"><ContentControl x:Name="UpdatesIcon" Width="16" Height="16" Margin="0,0,8,0"/><TextBlock x:Name="UpdatesCaption" Text="Aktualizacje"/></StackPanel></Button>
+        </Grid>
+      </Border>
+      <Border Grid.Row="1" Background="White" BorderBrush="{StaticResource Line}" BorderThickness="0,0,1,0">
+        <Grid Margin="16,20,16,16"><Grid.RowDefinitions><RowDefinition Height="30"/><RowDefinition Height="48"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+          <DockPanel><TextBlock Text="&#x0179;r&#x00F3;d&#x0142;a" FontWeight="SemiBold" FontSize="14"/><TextBlock x:Name="SourceCount" Text="0" Foreground="{StaticResource Muted}" HorizontalAlignment="Right"/></DockPanel>
+          <Grid Grid.Row="1"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+            <Button x:Name="AddFolder" Padding="8,7" Margin="0,0,5,8" ToolTip="Dodaj folder"><StackPanel Orientation="Horizontal"><ContentControl x:Name="FolderPlusIcon" Width="16" Height="16" Margin="0,0,7,0"/><TextBlock Text="Folder"/></StackPanel></Button>
+            <Button x:Name="AddFiles" Grid.Column="1" Padding="8,7" Margin="5,0,0,8" ToolTip="Dodaj zdj&#x0119;cia JPG"><StackPanel Orientation="Horizontal"><ContentControl x:Name="ImagesIcon" Width="16" Height="16" Margin="0,0,7,0"/><TextBlock Text="Zdj&#x0119;cia"/></StackPanel></Button>
+          </Grid>
+          <ListBox x:Name="Sources" Grid.Row="2" Background="Transparent" BorderThickness="0" SelectionMode="Extended" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBox.ItemTemplate><DataTemplate><StackPanel ToolTip="{Binding FullPath}"><TextBlock Text="{Binding Name}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/><TextBlock Text="{Binding Detail}" Foreground="#717982" FontSize="11" Margin="0,5,0,0" TextTrimming="CharacterEllipsis"/></StackPanel></DataTemplate></ListBox.ItemTemplate>
+          </ListBox>
+          <DockPanel Grid.Row="3" Margin="0,12,0,0"><Button x:Name="RemoveSource" Style="{StaticResource IconButton}" ToolTip="Usu&#x0144; zaznaczone"><ContentControl x:Name="TrashIcon" Width="16" Height="16"/></Button><Button x:Name="ClearSources" Content="Wyczy&#x015B;&#x0107; list&#x0119;" BorderThickness="0" Background="Transparent" Foreground="{StaticResource Muted}" HorizontalAlignment="Right" Padding="8,7"/></DockPanel>
+        </Grid>
+      </Border>
+      <Grid Grid.Row="1" Grid.Column="1" Margin="22,18,22,14"><Grid.RowDefinitions><RowDefinition Height="40"/><RowDefinition Height="*"/><RowDefinition Height="52"/></Grid.RowDefinitions>
+        <Grid><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+          <TextBlock x:Name="PreviewTitle" Text="Podgl&#x0105;d" FontWeight="SemiBold" FontSize="14" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" Margin="0,0,12,0"/>
+          <Border Grid.Column="1" Background="#E5E9ED" CornerRadius="5" Padding="3" VerticalAlignment="Center"><StackPanel Orientation="Horizontal"><RadioButton x:Name="Before" Content="Orygina&#x0142;" GroupName="Preview" Style="{StaticResource Segment}"/><RadioButton x:Name="After" Content="Wynik" GroupName="Preview" Style="{StaticResource Segment}" IsChecked="True"/></StackPanel></Border>
+        </Grid>
+        <Grid x:Name="PreviewSurface" Grid.Row="1" Background="#E9EDF0" Margin="0,12,0,0" ClipToBounds="True">
+          <Image x:Name="Preview" Stretch="Uniform" Margin="24"/>
+          <StackPanel x:Name="EmptyPreview" HorizontalAlignment="Center" VerticalAlignment="Center"><ContentControl x:Name="EmptyImageIcon" Width="42" Height="42" HorizontalAlignment="Center" Foreground="#A7B0B9"/><TextBlock x:Name="EmptyText" Text="Brak zdj&#x0119;&#x0107;" FontSize="15" Foreground="#8A949E" Margin="0,14,0,0" HorizontalAlignment="Center"/></StackPanel>
+          <Border x:Name="DropHighlight" Background="#33067CBD" BorderBrush="#067CBD" BorderThickness="2" Visibility="Collapsed" IsHitTestVisible="False"/>
+        </Grid>
+        <Grid Grid.Row="2" Margin="0,10,0,0"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+          <StackPanel VerticalAlignment="Center"><TextBlock x:Name="PhotoName" Text="" FontWeight="SemiBold" FontSize="12" TextTrimming="CharacterEllipsis"/><TextBlock x:Name="PhotoDimensions" Text="" Foreground="{StaticResource Muted}" FontSize="11" Margin="0,4,0,0"/></StackPanel>
+          <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center"><Button x:Name="PrevPhoto" Style="{StaticResource IconButton}" ToolTip="Poprzednie zdj&#x0119;cie" IsEnabled="False"><ContentControl x:Name="PrevIcon" Width="16" Height="16"/></Button><TextBlock x:Name="PhotoCounter" Text="0 / 0" VerticalAlignment="Center" Margin="10,0" Foreground="{StaticResource Muted}"/><Button x:Name="NextPhoto" Style="{StaticResource IconButton}" ToolTip="Nast&#x0119;pne zdj&#x0119;cie" IsEnabled="False"><ContentControl x:Name="NextIcon" Width="16" Height="16"/></Button></StackPanel>
+        </Grid>
+      </Grid>
+      <Border Grid.Row="1" Grid.Column="2" Background="White" BorderBrush="{StaticResource Line}" BorderThickness="1,0,0,0">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"><StackPanel x:Name="Settings" Margin="22,22,22,18">
+          <TextBlock Text="Eksport" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,18"/>
+          <TextBlock Text="Profil" Style="{StaticResource FieldLabel}"/><ComboBox x:Name="Profile" SelectedIndex="0"><ComboBoxItem Content="Makalu Sklep"/><ComboBoxItem Content="W&#x0142;asne ustawienia"/></ComboBox>
+          <Grid Margin="0,16,0,16"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+            <StackPanel><TextBlock Text="PION" Foreground="{StaticResource Muted}" FontSize="10"/><TextBlock x:Name="PortraitSize" Text="1920 &#x00D7; 2880" FontSize="14" FontWeight="SemiBold" Margin="0,5,0,0"/></StackPanel>
+            <StackPanel Grid.Column="1"><TextBlock Text="POZIOM" Foreground="{StaticResource Muted}" FontSize="10"/><TextBlock x:Name="LandscapeSize" Text="2880 &#x00D7; 1920" FontSize="14" FontWeight="SemiBold" Margin="0,5,0,0"/></StackPanel>
+          </Grid>
+          <Border Background="{StaticResource Line}" Height="1" Margin="0,0,0,16"/>
+          <TextBlock Text="Orientacja" Style="{StaticResource FieldLabel}"/><ComboBox x:Name="Ratio" SelectedIndex="0"><ComboBoxItem Content="Automatyczna" Tag="Auto"/><ComboBoxItem Content="Poziom 16:9" Tag="16:9"/><ComboBoxItem Content="Pion 9:16" Tag="9:16"/></ComboBox>
+          <Expander x:Name="DimensionsExpander" Header="Rozmiar niestandardowy" Margin="0,14,0,0" Foreground="#717982"><StackPanel Margin="0,12,0,0">
+          <TextBlock Text="Rozmiar bazowy" Style="{StaticResource FieldLabel}"/><ComboBox x:Name="Preset"/>
+          <Grid Margin="0,12,0,0"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="12"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+            <StackPanel><TextBlock Text="Szeroko&#x015B;&#x0107; (px)" Style="{StaticResource FieldLabel}"/><TextBox x:Name="WidthBox" Text="2880"/></StackPanel>
+            <StackPanel Grid.Column="2"><TextBlock Text="Wysoko&#x015B;&#x0107; (px)" Style="{StaticResource FieldLabel}"/><TextBox x:Name="HeightBox" Text="1920"/></StackPanel>
+          </Grid></StackPanel></Expander>
+          <TextBlock Text="Dopasowanie" Style="{StaticResource FieldLabel}" Margin="0,14,0,7"/><ComboBox x:Name="Mode" SelectedIndex="0"><ComboBoxItem Content="Ca&#x0142;e zdj&#x0119;cie, bia&#x0142;e t&#x0142;o"/><ComboBoxItem Content="Przytnij do formatu"/></ComboBox>
+          <DockPanel Margin="0,16,0,4"><TextBlock Text="Jako&#x015B;&#x0107; JPG" Style="{StaticResource FieldLabel}" VerticalAlignment="Center"/><TextBox x:Name="QualityNumber" Text="85" Width="52" HorizontalAlignment="Right" Padding="8,5" MinHeight="28" TextAlignment="Center"/></DockPanel>
+          <Slider x:Name="Quality" Minimum="1" Maximum="100" Value="85" TickFrequency="1" IsSnapToTickEnabled="True" Margin="-3,3,-3,0" Foreground="{StaticResource Accent}"/>
+          <Grid Margin="0,14,0,10"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="82"/></Grid.ColumnDefinitions><TextBlock Text="DPI &#x2022; poziom i pion" Foreground="{StaticResource Muted}" FontSize="12" VerticalAlignment="Center"/><TextBox x:Name="DpiBox" Grid.Column="1" Text="72"/></Grid>
+          <CheckBox x:Name="Recursive" Content="Uwzgl&#x0119;dnij podfoldery"/>
+        </StackPanel></ScrollViewer>
+      </Border>
+      <Border Grid.Row="2" Grid.ColumnSpan="3" Background="White" BorderBrush="{StaticResource Line}" BorderThickness="0,1,0,0">
+        <Grid Margin="22,14"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="20"/><ColumnDefinition Width="320"/></Grid.ColumnDefinitions>
+          <StackPanel><Grid><Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+            <TextBlock Text="Zapis" Foreground="{StaticResource Muted}" Margin="0,0,12,0" VerticalAlignment="Center"/>
+            <TextBox x:Name="Output" Grid.Column="1" IsReadOnly="True" Text="resize (przy ka&#x017C;dym &#x017A;r&#x00F3;dle)" MinWidth="80"/>
+            <Button x:Name="ChooseOutput" Grid.Column="2" Style="{StaticResource IconButton}" Margin="7,0,0,0" ToolTip="Wybierz folder wynikowy"><ContentControl x:Name="OutputFolderIcon" Width="16" Height="16"/></Button>
+            <Button x:Name="DefaultOutput" Grid.Column="3" Style="{StaticResource IconButton}" Margin="7,0,0,0" ToolTip="Przywr&#x00F3;&#x0107; folder domy&#x015B;lny"><ContentControl x:Name="ResetIcon" Width="16" Height="16"/></Button>
+          </Grid><Grid Margin="0,10,0,0"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions><TextBlock x:Name="Status" Text="Gotowe do pracy" FontSize="12" Foreground="{StaticResource Muted}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/><Button x:Name="LogButton" Grid.Column="1" Content="Dziennik" BorderThickness="0" Background="Transparent" FontSize="12" Foreground="{StaticResource Accent}" MinHeight="24" Padding="8,0"/></Grid></StackPanel>
+          <Grid Grid.Column="2"><Grid.RowDefinitions><RowDefinition Height="40"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+            <Grid><Grid.ColumnDefinitions><ColumnDefinition Width="44"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+              <Button x:Name="Cancel" Style="{StaticResource IconButton}" ToolTip="Zatrzymaj po bie&#x017C;&#x0105;cym zdj&#x0119;ciu" IsEnabled="False" Height="40"><ContentControl x:Name="StopIcon" Width="16" Height="16"/></Button>
+              <Button x:Name="Start" Grid.Column="1" Style="{StaticResource Primary}"><StackPanel Orientation="Horizontal"><ContentControl x:Name="PlayIcon" Width="16" Height="16" Margin="0,0,9,0"/><TextBlock Text="Eksportuj JPG"/></StackPanel></Button>
+            </Grid>
+            <Button x:Name="OpenOutput" Grid.Row="1" Content="Otw&#x00F3;rz wynik" IsEnabled="False" Background="Transparent" BorderThickness="0" FontSize="12" MinHeight="24" Padding="0,7,0,0" HorizontalAlignment="Right" Foreground="{StaticResource Accent}"/>
+          </Grid>
+          <ProgressBar x:Name="Progress" Grid.ColumnSpan="3" Height="3" Minimum="0" Maximum="1000" VerticalAlignment="Bottom" Margin="0,0,0,-12" Foreground="{StaticResource Accent}" Background="#E9EDF0" BorderThickness="0"/>
+        </Grid>
+      </Border>
+      <Grid Grid.Row="3" Grid.ColumnSpan="3" Margin="22,0"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+        <TextBlock Text="Tw&#x00F3;rca: Dariusz Trachimowicz &#x2022; Digital Xperts" FontSize="11" Foreground="{StaticResource Muted}" VerticalAlignment="Center"/>
+        <TextBlock x:Name="VersionFooter" Grid.Column="1" Text="Wersja 2.0.0" FontSize="11" Foreground="{StaticResource Muted}" VerticalAlignment="Center"/>
+      </Grid>
+    </Grid>
+    <Border x:Name="LogOverlay" Background="#990F1720" Visibility="Collapsed">
+          <Border Background="White" CornerRadius="6" Margin="70" Padding="24"><Grid><Grid.RowDefinitions><RowDefinition Height="36"/><RowDefinition Height="*"/></Grid.RowDefinitions><DockPanel><TextBlock Text="Dziennik przetwarzania" FontSize="18" FontWeight="SemiBold"/><Button x:Name="CloseLog" Style="{StaticResource IconButton}" HorizontalAlignment="Right" ToolTip="Zamknij dziennik"><ContentControl x:Name="CloseLogIcon" Width="16" Height="16"/></Button></DockPanel><TextBox x:Name="Log" Grid.Row="1" Height="Auto" VerticalContentAlignment="Stretch" Margin="0,16,0,0" IsReadOnly="True" TextWrapping="NoWrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" FontFamily="Consolas" FontSize="12"/></Grid></Border>
+    </Border>
+    <Border x:Name="UpdateOverlay" Background="#990F1720" Visibility="Collapsed">
+      <Border Background="White" Width="510" CornerRadius="6" Padding="28" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel><DockPanel><TextBlock Text="Aktualizacje" FontSize="22" FontWeight="SemiBold"/><Button x:Name="CloseUpdates" Style="{StaticResource IconButton}" HorizontalAlignment="Right" ToolTip="Zamknij"><ContentControl x:Name="CloseUpdatesIcon" Width="16" Height="16"/></Button></DockPanel>
+          <TextBlock x:Name="InstalledVersion" Text="Wersja zainstalowana: 2.0.0" Margin="0,16,0,0" Foreground="{StaticResource Muted}"/>
+          <Button x:Name="RepositoryLink" Content="DariuszTrachimowicz/ResizerJPG" BorderThickness="0" Background="Transparent" Foreground="{StaticResource Accent}" HorizontalAlignment="Left" Padding="0,8"/>
+          <Border Height="1" Background="{StaticResource Line}" Margin="0,14,0,18"/>
+          <TextBlock x:Name="UpdateStatus" Text="Sprawd&#x017A; dost&#x0119;pno&#x015B;&#x0107; nowej wersji." TextWrapping="Wrap" Margin="0,0,0,14"/>
+          <ProgressBar x:Name="UpdateProgress" IsIndeterminate="True" Height="3" Visibility="Collapsed" Foreground="{StaticResource Accent}" BorderThickness="0" Margin="0,0,0,12"/>
+          <CheckBox x:Name="AutoUpdate" Content="Sprawdzaj aktualizacje przy uruchomieniu" IsChecked="True" Margin="0,0,0,20"/>
+          <StackPanel Orientation="Horizontal"><Button x:Name="CheckUpdate" Content="Sprawd&#x017A; teraz" Margin="0,0,10,0"/><Button x:Name="InstallUpdate" Content="Pobierz i zainstaluj" Style="{StaticResource Primary}" IsEnabled="False"/></StackPanel>
+        </StackPanel>
+      </Border>
+    </Border>
+  </Grid>
+</Window>

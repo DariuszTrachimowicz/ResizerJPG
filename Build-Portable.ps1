@@ -1,0 +1,49 @@
+$ErrorActionPreference = 'Stop'
+$root = $PSScriptRoot
+. (Join-Path $root 'ResizerUpdates.ps1')
+$metadata = Get-ResizerAppInfo
+$files = @(Get-ResizerManagedFiles)
+$portable = Join-Path $root 'ResizerJPG_portable'
+$archivePath = Join-Path $root 'ResizerJPG_portable.zip'
+foreach ($file in $files) {
+    $source = Join-Path $root $file
+    if (-not (Test-Path -LiteralPath $source -PathType Leaf)) { throw "Brak pliku: $source" }
+    if ([IO.Path]::GetExtension($file) -eq '.ps1') {
+        $parseErrors = $null
+        $parseTokens = $null
+        [void][Management.Automation.Language.Parser]::ParseFile($source,[ref]$parseTokens,[ref]$parseErrors)
+        if ($parseErrors.Count -gt 0) { throw ($parseErrors | Out-String) }
+    }
+}
+[void](New-Item -ItemType Directory -Path $portable -Force)
+$hashes = [ordered]@{}
+foreach ($file in $files) {
+    Copy-Item -LiteralPath (Join-Path $root $file) -Destination (Join-Path $portable $file) -Force
+    if ((Get-FileHash -LiteralPath (Join-Path $root $file)).Hash -ne (Get-FileHash -LiteralPath (Join-Path $portable $file)).Hash) { throw "Niepoprawna kopia: $file" }
+    $hashes[$file] = (Get-FileHash -LiteralPath (Join-Path $portable $file) -Algorithm SHA256).Hash
+}
+$manifest = [ordered]@{version=$metadata.version;files=$hashes}
+$manifestPath = Join-Path $portable 'package-manifest.json'
+[IO.File]::WriteAllText($manifestPath,($manifest | ConvertTo-Json -Depth 4))
+Copy-Item -LiteralPath $manifestPath -Destination (Join-Path $root 'package-manifest.json') -Force
+$files += 'package-manifest.json'
+$packageFiles = @($files | ForEach-Object { Join-Path $portable $_ })
+Compress-Archive -LiteralPath $packageFiles -DestinationPath $archivePath -Force
+Add-Type -AssemblyName System.IO.Compression.FileSystem
+$archive = [IO.Compression.ZipFile]::OpenRead($archivePath)
+try {
+    if ($archive.Entries.Count -ne $files.Count) { throw 'Niepoprawna liczba plikow w ZIP.' }
+    foreach ($file in $files) {
+        $entry = $archive.GetEntry($file)
+        if ($null -eq $entry) { throw "Brak pliku w ZIP: $file" }
+        $stream = $entry.Open()
+        $sha = [Security.Cryptography.SHA256]::Create()
+        try { $hash = [BitConverter]::ToString($sha.ComputeHash($stream)).Replace('-','') } finally { $stream.Dispose(); $sha.Dispose() }
+        if ($hash -ne (Get-FileHash -LiteralPath (Join-Path $root $file)).Hash) { throw "Niepoprawna zawartosc ZIP: $file" }
+    }
+} finally { $archive.Dispose() }
+$archiveHash = (Get-FileHash -LiteralPath $archivePath -Algorithm SHA256).Hash.ToLowerInvariant()
+[IO.File]::WriteAllText(($archivePath + '.sha256'),($archiveHash + '  ResizerJPG_portable.zip' + [Environment]::NewLine))
+[void](Test-ResizerPackage -Directory $portable -ExpectedVersion $metadata.version)
+& (Join-Path $root 'UtworzSkrotZIkona.ps1')
+Write-Host "Paczka zweryfikowana: $archivePath"

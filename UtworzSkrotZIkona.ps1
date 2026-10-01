@@ -30,5 +30,24 @@ $shortcut.IconLocation = "$icon,0"
 $shortcut.Description = "Resizer JPG - tworca oprogramowania: Dariusz Trachimowicz"
 $shortcut.Save()
 
+# Notify only this saved shortcut; leave global associations and user apps alone.
+try {
+    if (-not ('ResizerShortcutShell' -as [type])) {
+        Add-Type -TypeDefinition @'
+using System;
+using System.Runtime.InteropServices;
+public static class ResizerShortcutShell {
+    [DllImport("shell32.dll", CharSet = CharSet.Unicode, ExactSpelling = true)]
+    public static extern void SHChangeNotify(uint eventId, uint flags,
+        [MarshalAs(UnmanagedType.LPWStr)] string item1, IntPtr item2);
+}
+'@ -ErrorAction Stop
+    }
+    # SHCNE_UPDATEITEM = 0x2000; SHCNF_PATHW = 0x0005.
+    [ResizerShortcutShell]::SHChangeNotify(0x2000, 0x0005, $shortcutPath, [IntPtr]::Zero)
+} catch {
+    Write-Warning ("Skrot zapisany, ale powiadomienie Windows o ikonie nie powiodlo sie: " + $_.Exception.Message)
+}
+
 Write-Host "Utworzono skrot z ikona:"
 Write-Host $shortcutPath

@@ -35,6 +35,9 @@ jobs:
         shell: powershell
         run: |
           ./tests/Test-HelpLicense.ps1
+      - name: Test native app icon and shortcut
+        shell: powershell
+        run: ./tests/Test-AppIcon.ps1
       - name: Build portable package
         shell: powershell
         run: ./Build-Portable.ps1

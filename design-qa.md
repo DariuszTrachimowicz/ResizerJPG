@@ -54,3 +54,12 @@
 - Final main portable package repeated Help/GPL, icons/dialogs, layout, installer/rollback, legacy 2.0 updater and full WPF export tests successfully. Real Help click started trusted Notepad with the exact local README argument; existing user editor processes were not closed. Editor launch receipt does not certify the visual contents of every Notepad tab.
 
 final result: passed
+
+## 2.2.1 Circular Application Icon
+- Latest user selection is proposal 2 (circle/photo/double-headed resize arrow), overriding earlier proposal 3 before implementation. Selected sheet: `exec-d837e310-1252-40ee-abc3-0f465d05f6b3.png`; extracted transparent master stored in repository `resizer-icon.png` without changing the header logo.
+- Native ICO contains seven alpha-enabled frames 16/24/32/48/64/128/256 px, mechanically encoded from the approved master. Native frame preview: `work/app-icon-native-preview.png`, actual pixel sizes 1:1, not a fake taskbar screenshot.
+- Old 16px icon measured 10x6 visible pixels and failed the regression. Revised frame bounds: 14x15 at 16px, 22x22 at 24px, 30x30 at 32px. Native 24/32 comparisons to approved master passed; corners remain transparent. Inspected the entire seven-frame preview.
+- Native Window.Icon readback is a 128x128 BitmapImage; no WPF loader/layout changes were needed. Shortcut creator twice in one process passed, including exact hidden launcher, arguments, working directory, icon and creator metadata.
+- Gemini review accepted round 1, zero findings. Header logo, toolbar geometry, GPL text, third-party notices, photo engine/queue, update/installer logic and VBS launchers unchanged.
+- Windows targeted refresh requests are not visual proof for every existing taskbar cache. Do not certify the user's actual taskbar screenshot without a supported native screen surface; preserve current user app/queue and pins.
+- Final main portable repeated native app-icon, help/GPL, toolbar X/dialogs, VBS launcher, update/rollback, legacy updater and full WPF export tests successfully. Targeted ICO/desktop/pinned-link refresh requests succeeded; external shortcut bytes and existing pin remained unchanged. Current user app was not closed.

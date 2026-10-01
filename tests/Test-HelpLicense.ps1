@@ -25,7 +25,7 @@ if ((Get-FileHash -LiteralPath (Join-Path $root 'LICENSE') -Algorithm SHA256).Ha
 if (-not (Get-Command Show-ResizerWindow).Parameters.ContainsKey('DocumentOpener')) { $failures += 'Missing injectable local document command.' }
 Assert ($failures.Count -eq 0) ($failures -join "`n")
 $info = Get-ResizerAppInfo
-Assert ($info.version -eq '2.2.0' -and $info.license -eq 'GPL-3.0-only') 'Release metadata must identify 2.2.0 GPL-3.0-only.'
+Assert ($info.version -match '^\d+\.\d+\.\d+$' -and [version]$info.version -ge [version]'2.2.0' -and $info.license -eq 'GPL-3.0-only') 'Release metadata must identify a valid current app version and GPL-3.0-only.'
 Assert (@(Get-ResizerManagedFiles).Count -eq 15) 'Existing 15 managed files plus manifest must keep the 16-entry archive contract.'
 
 # Load engine definitions without invoking the application entry point.
@@ -71,7 +71,7 @@ Show-ResizerWindow -DocumentOpener {
         Assert ($ui.CopyrightFooter.Text -match '2026.*Dariusz Trachimowicz.*Digital Xperts') 'Copyright must remain visible.'
         $helpGeometry = $ui.HelpIcon.Content.Child.Children[0].Data
         Assert ($helpGeometry.Bounds.Width -ge 20 -and $helpGeometry.Bounds.Height -ge 20) 'Help icon must include its question circle.'
-        $ui.UpdatesCaption.Text = 'Nowa wersja 2.2.0'
+        $ui.UpdatesCaption.Text = 'Nowa wersja ' + $info.version
         foreach ($size in @(@(1000,680),@(1440,1024))) {
             $window.Width = $size[0]; $window.Height = $size[1]
             Invoke-ResizerUiEvents; $window.UpdateLayout()

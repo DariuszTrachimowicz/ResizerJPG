@@ -1,5 +1,11 @@
 # Zmiany
 
+## 2.2.1 - 2026-10-01
+
+- Osobna ikona programu i skrotu: zdjecie z ukosna dwukierunkowa strzalka na cyjanowym kole, z przezroczystym tlem i siedmioma rozmiarami ICO 16-256 px. Oryginalne logo Digital Xperts w naglowku pozostaje bez zmian.
+- Kreator skrotu powiadamia Windows o zmianie konkretnego pliku LNK. Bez globalnego resetowania pamieci ikon ani restartowania Eksploratora.
+- Natywne testy ramek ICO, przezroczystosci, wypelnienia, zgodnosci z zatwierdzonym masterem i ponownego tworzenia skrotu. Zachowany format paczki 16 plikow, pomoc i GPLv3.
+
 ## 2.2.0 - 2026-10-01
 
 - Pomoc pod ikona znaku zapytania w naglowku: lokalny README otwierany w Notatniku bez blokowania interfejsu. Instrukcje importu, przeciagania, eksportu, podgladu i rozwiazywania problemow.

@@ -2,7 +2,7 @@
 
 Pomoc: kliknij ikone **znaku zapytania w kolku** w naglowku programu. Otwiera ten plik README w Notatniku, lokalnie i bez internetu. Link **GPLv3 - bez gwarancji** w stopce otwiera pelny tekst LICENSE. Mozesz tez otworzyc oba pliki bezposrednio z folderu programu.
 
-Wersja **2.2.0**. Tworca: **Dariusz Trachimowicz**. [Digital Xperts](https://d-x.pl/).
+Wersja **2.2.1**. Tworca: **Dariusz Trachimowicz**. [Digital Xperts](https://d-x.pl/).
 
 Przenosny program Windows do przygotowywania zdjec JPG/JPEG. Natywny interfejs WPF, bez dodatkowych bibliotek. Przetwarzanie jest lokalne; internet jest potrzebny tylko do aktualizacji.
 
@@ -11,6 +11,8 @@ Przenosny program Windows do przygotowywania zdjec JPG/JPEG. Natywny interfejs W
 ## Uruchomienie
 
 Rozpakuj **cala paczke ZIP** do jednego folderu. Kliknij `Uruchom Resizer JPG.vbs` lub utworz skrot przez `Utworz skrot z ikona.vbs`. Po przeniesieniu programu utworz skrot ponownie. Uruchamiacz pracuje z ukryta konsola.
+
+Po aktualizacji uruchom program ponownie i odtworz skrot przez `Utworz skrot z ikona.vbs`, aby wskazywal aktualna ikone. Skrypt `UtworzSkrotZIkona.ps1`, uzywany przy budowaniu paczki i instalacji aktualizacji, powiadamia Windows o zmianie konkretnego skrotu. Windows moze nadal przechowywac stara ikone przypietego elementu paska zadan; wyglad przypiec zalezy od lokalnej pamieci podrecznej powloki.
 
 Wymagania: Windows 10/11, Windows PowerShell 5.1, WPF i Windows Script Host. Polityka organizacji blokujaca VBS lub PowerShell moze zablokowac uruchamiacz.
 
@@ -99,6 +101,6 @@ Program jest udostepniany **BEZ JAKIEJKOLWIEK GWARANCJI**, w tym dorozumianej gw
 
 `AppInfo.json` jest zrodlem wersji i adresu repozytorium. `Build-Portable.ps1` buduje folder przenosny, ZIP, manifest i plik SHA-256. Tag `vX.Y.Z` zgodny z metadanymi uruchamia testy i workflow wydania.
 
-Testy w `tests`: `Test-Resizer.ps1`, `Test-Queue.ps1`, `Test-UIModels.ps1`, `Test-WindowLayout.ps1`, `Test-Launcher.ps1`, `Test-Updates.ps1`, `Test-PortableCompatibility.ps1`, `Test-Icons.ps1` i `Test-HelpLicense.ps1`. Lokalny test GUI: `powershell -Sta -NoProfile -File .\tests\Test-WpfUI.ps1`. CI sprawdza silnik, kolejke, modele, strukture ukladu, ikony, pomoc/licencje, paczke i instalator; nie zastepuje recznego testu interfejsu ani fizycznego przeciagania z Eksploratora.
+Testy w `tests`: `Test-Resizer.ps1`, `Test-Queue.ps1`, `Test-UIModels.ps1`, `Test-WindowLayout.ps1`, `Test-Launcher.ps1`, `Test-Updates.ps1`, `Test-PortableCompatibility.ps1`, `Test-Icons.ps1`, `Test-AppIcon.ps1` i `Test-HelpLicense.ps1`. Lokalny test GUI: `powershell -Sta -NoProfile -File .\tests\Test-WpfUI.ps1`. CI sprawdza silnik, kolejke, modele, strukture ukladu, ikony, pomoc/licencje, paczke i instalator; nie zastepuje recznego testu interfejsu ani fizycznego przeciagania z Eksploratora.
 
-Logo pochodzi z projektu Digital Xperts, zgodnie z poleceniem wlasciciela. Ikona programu jest wielorozmiarowa wersja logo. Ikony kontrolek: Lucide (ISC/MIT); licencje w `THIRD-PARTY-NOTICES.txt`.
+Logo w naglowku pochodzi z projektu Digital Xperts, zgodnie z poleceniem wlasciciela. Osobna ikona programu i skrotu przedstawia zdjecie z ukosna dwukierunkowa strzalka na cyjanowym kole, z przezroczystym tlem. ICO zawiera rozmiary 16, 24, 32, 48, 64, 128 i 256 px. Zatwierdzony master `resizer-icon.png` pozostaje w repozytorium, poza paczka przenosna. `tools/Prepare-BrandAssets.py` korzysta z niego domyslnie (opcjonalne `--icon`), niezaleznie od `--logo`. Ikony kontrolek: Lucide (ISC/MIT); licencje w `THIRD-PARTY-NOTICES.txt`.
